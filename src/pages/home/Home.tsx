@@ -1,4 +1,4 @@
-import { Card, Row, Col, Typography } from 'antd';
+import { Card, Row, Col, Typography, Space, Statistic } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
     CodeOutlined,
@@ -8,6 +8,7 @@ import {
     BgColorsOutlined,
     FileTextOutlined,
     LockOutlined,
+    EyeOutlined,
     RobotOutlined,
     EditOutlined,
     PictureOutlined,
@@ -18,6 +19,7 @@ import {
     SwapOutlined
 } from '@ant-design/icons';
 import { theme } from 'antd';
+
 import './Home.css';
 
 const { Title, Paragraph } = Typography;
@@ -132,8 +134,6 @@ function Home() {
         }
     ];
 
-    // 工具统计功能已移除
-
     // 渲染工具卡片
     const renderToolCard = (tool: any, index: number) => {
         return (
@@ -171,8 +171,6 @@ function Home() {
                             {tool.description}
                         </Paragraph>
                     </div>
-
-                    {/* 访问统计信息已移除 */}
                 </Card>
             </Col>
         );
