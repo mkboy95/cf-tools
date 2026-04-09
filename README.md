@@ -1,13 +1,22 @@
 
 # CF Tools
 
-一个基于 Cloudflare Workers 的全栈 React 工具站，涵盖常用开发与日常实用工具，并内置访问统计与可选的 AI 能力。
+一个全栈 React 工具站，涵盖常用开发与日常实用工具，并内置访问统计与可选的 AI 能力。
 
 - 前端：React 19 + TypeScript + Vite + Ant Design
-- 后端：Hono（运行在 Cloudflare Workers）
-- 部署：Cloudflare Workers（使用 Wrangler）
-- 存储：Cloudflare KV（用于访问统计）
+- 后端：Hono（运行在 Cloudflare Workers 或 EdgeOne Edge Functions）
+- 部署：支持 Cloudflare Workers 和 EdgeOne Pages 双平台
+- 存储：Cloudflare KV / EdgeOne EdgeKV（用于访问统计）
 - 演示地址：[https://cf-tools.tianyao.qzz.io/](https://cf-tools.tianyao.qzz.io/)
+
+## 多平台部署支持
+
+本项目支持两种免费的边缘计算平台：
+
+| 平台 | 计算服务 | KV 存储 | 免费额度 | 部署文档 |
+|------|---------|---------|---------|---------|
+| **Cloudflare Workers** | Workers | Cloudflare KV | 10万次/天 | [下方文档](#快速开始) |
+| **EdgeOne Pages** | Edge Functions | EdgeKV | 100万次/月 | [edgeone/README.md](./edgeone/README.md) |
 
 ## Star History
 
@@ -66,7 +75,12 @@ cf-tools/
 │   ├── routes/          # 路由：index / analytics / proxy
 │   ├── middleware/      # 中间件：CORS
 │   └── types.ts         # 类型定义（KV 绑定等）
+├── edgeone/             # EdgeOne Edge Functions 后端 API
+│   ├── routes/          # 路由文件
+│   ├── middleware/      # 中间件
+│   └── types.ts         # 类型定义
 ├── wrangler.jsonc       # Workers 配置
+├── edgeone.config.js    # EdgeOne 配置
 ├── vite.config.ts       # Vite 配置
 └── package.json         # 项目脚本与依赖
 ```
@@ -294,6 +308,17 @@ curl -H "Authorization: Bearer <CF_API_TOKEN>" \
 - `npm run deploy`：构建并部署到 Cloudflare Workers（调用 `wrangler deploy`）
 - `npm run lint`：运行 ESLint
 - `npm run cf-typegen`：生成 Cloudflare 绑定类型（`wrangler types`）
+
+## EdgeOne Pages 部署（可选）
+
+如果你想部署到 EdgeOne Pages：
+
+1. 查看 [edgeone/README.md](./edgeone/README.md) 获取详细部署指南
+2. EdgeOne 提供免费额度：
+   - Edge Functions：100万次调用/月
+   - EdgeKV 读取：1000万次/月
+   - EdgeKV 写入：100万次/月
+3. 在 EdgeOne 控制台创建 EdgeKV 命名空间并绑定到项目
 
 ---
 
