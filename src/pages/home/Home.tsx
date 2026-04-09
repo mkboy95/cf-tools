@@ -27,6 +27,38 @@ function Home() {
     const navigate = useNavigate();
     const { token: { colorBgContainer } } = theme.useToken();
 
+    // 自定义工具集
+    const customTools = [
+        {
+            title: '自定义工具1',
+            description: '我的第一个自定义工具',
+            icon: <CodeOutlined style={{ fontSize: '20px', color: '#1890ff' }} />,
+            path: '/custom/tool1',
+            available: true
+        },
+        {
+            title: '自定义工具2',
+            description: '我的第二个自定义工具',
+            icon: <LinkOutlined style={{ fontSize: '20px', color: '#52c41a' }} />,
+            path: '/custom/tool2',
+            available: true
+        },
+        {
+            title: '自定义工具3',
+            description: '我的第三个自定义工具',
+            icon: <ClockCircleOutlined style={{ fontSize: '20px', color: '#fa8c16' }} />,
+            path: '/custom/tool3',
+            available: true
+        },
+        {
+            title: '自定义工具4',
+            description: '我的第四个自定义工具',
+            icon: <QrcodeOutlined style={{ fontSize: '20px', color: '#722ed1' }} />,
+            path: '/custom/tool4',
+            available: true
+        }
+    ];
+
     // 开发者工具集
     const devTools = [
         {
@@ -175,10 +207,64 @@ function Home() {
         );
     };
 
+    // 渲染自定义工具卡片（顶部小卡片）
+    const renderCustomToolCard = (tool: any, index: number) => {
+        return (
+            <Col xs={12} sm={6} md={6} lg={4} xl={3} key={index}>
+                <Card
+                    hoverable={tool.available}
+                    style={{
+                        height: '120px',
+                        textAlign: 'center',
+                        opacity: tool.available ? 1 : 0.6,
+                        cursor: tool.available ? 'pointer' : 'not-allowed',
+                        transition: 'all 0.3s ease',
+                        marginBottom: '16px'
+                    }}
+                    styles={{
+                        body: {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            height: '100%',
+                            padding: '12px'
+                        }
+                    }}
+                    onClick={() => tool.available && navigate(tool.path)}
+                >
+                    <div style={{ marginBottom: '8px' }}>
+                        {tool.icon}
+                    </div>
+                    <Title level={5} style={{ margin: '4px 0', fontSize: '14px' }}>
+                        {tool.title}
+                        {!tool.available && <span style={{ color: '#999', fontSize: '10px', marginLeft: '4px' }}> (开发中)</span>}
+                    </Title>
+                    <Paragraph style={{ margin: 0, color: '#666', fontSize: '11px' }}>
+                        {tool.description}
+                    </Paragraph>
+                </Card>
+            </Col>
+        );
+    };
+
     return (
         <div className="home-container" style={{ background: colorBgContainer }}>
-            <div style={{ textAlign: 'center', marginBottom: '5px' }}>
-                {/* 网站总体统计信息已移除 */}
+            <div style={{ marginBottom: '24px' }}>
+                {/* 自定义工具卡片区域 */}
+                <div style={{
+                    background: 'white',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    marginBottom: '16px'
+                }}>
+                    <Title level={4} style={{ marginBottom: '16px', color: '#1890ff' }}>
+                        我的自定义工具
+                    </Title>
+                    <Row gutter={[16, 16]}>
+                        {customTools.map((tool, index) => renderCustomToolCard(tool, index))}
+                    </Row>
+                </div>
             </div>
 
             {/* 开发者工具集区域 */}
